@@ -1,3 +1,7 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.viewmodels
 
 import android.util.Log
@@ -15,16 +19,8 @@ class FirstViewModel(private val wordRepository: WordRepository) : ViewModel() {
         getJsonWordProperties()
     }
 
-    private fun createWord(lang: String, text: String, translateLang: String, translateText: String,
-                           imgSrcUrl: String) {
-        val wordToAdd = Word(lang, text)
-        wordToAdd.addTranslation(Word(translateLang, translateText))
-        wordToAdd.imgSrcUrl = imgSrcUrl
-        wordRepository.addDummyWord(translateText)
-        wordRepository.addWord(wordToAdd)
-        //Log.i("FirstViewModel", "${wordToAdd.translations}")
-    }
 
+    //Gather the data from Json file in "https://users.metropolia.fi/~lauriari/" and create words and place them in repository
     private fun getJsonWordProperties() {
         viewModelScope.launch {
             try {
@@ -37,9 +33,19 @@ class FirstViewModel(private val wordRepository: WordRepository) : ViewModel() {
             } catch (e: Exception) {
                 Log.i("FirstViewModel","Error: $e")
             }
-            Log.i("FirstViewModel","Repository : ${wordRepository.getWords().value}")
-            Log.i("FirstViewModel","Repository : ${wordRepository.getRandomWord().value?.imgSrcUrl}")
-            Log.i("FirstViewModel","Repository : ${wordRepository.getDummyWords().value}")
+            Log.i("FirstViewModel","Repository all words: ${wordRepository.getWords().value}")
+            Log.i("FirstViewModel","Repository random word: ${wordRepository.getRandomWord().value?.imgSrcUrl}")
+            Log.i("FirstViewModel","Repository words for wrong answers: ${wordRepository.getDummyWords().value}")
         }
+    }
+
+    //Creation of words
+    private fun createWord(lang: String, text: String, translateLang: String, translateText: String,
+                           imgSrcUrl: String) {
+        val wordToAdd = Word(lang, text)
+        wordToAdd.addTranslation(Word(translateLang, translateText))
+        wordToAdd.imgSrcUrl = imgSrcUrl
+        wordRepository.addDummyWord(translateText)
+        wordRepository.addWord(wordToAdd)
     }
 }

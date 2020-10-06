@@ -1,3 +1,7 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.data
 
 import android.util.Log
@@ -10,34 +14,13 @@ class FakeWordDao {
     private val wordList = mutableListOf<Word>()
     private val dummyWordList = mutableListOf<String>()
 
-    //MutableLiveData is from the Architecture Components Library
-    //LiveData can be observed for changes
+    //Words to display as wrong answers
     private val dummyWords = MutableLiveData<List<String>>()
     private val words = MutableLiveData<List<Word>>()
     private var word = MutableLiveData<Word>()
 
 
-    init {/*
-        val w = Word("Finnish", "kaivo")
-        w.addTranslation(Word("English", "well"))
-        val w2 = Word("Finnish", "seinä")
-        w2.addTranslation(Word("English", "wall"))
-        val w3 = Word("Finnish", "auto")
-        w3.addTranslation(Word("English", "car"))
-        val w4 = Word("Finnish", "kissa")
-        w4.addTranslation(Word("English", "cat"))
-        val w5 = Word("Finnish", "koira")
-        w5.addTranslation(Word("English", "dog"))
-        w5.addTranslation(Word("English", "hound"))
-        addWord(w)
-        addWord(w2)
-        addWord(w3)
-        addWord(w4)
-        addWord(w5)
-*/
-
-        //words.value = wordList
-        //word.value = wordList.random()
+    init {
         Log.i("FakeWordDao", "word value: ${word.value}")
     }
 
@@ -60,7 +43,5 @@ class FakeWordDao {
     }
 
     fun getDummyWords() = dummyWords as LiveData<List<String>>
-
-
 
 }

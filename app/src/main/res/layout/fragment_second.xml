@@ -46,7 +46,6 @@
             android:ems="10"
             android:hint="Translation"
             android:inputType="textPersonName"
-            android:text="@{secondViewModel.answer.toString()}"
             android:textAlignment="center"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,16 +65,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_input"
             app:layout_constraintVertical_bias="0.139" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{secondViewModel.answer.toString()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <Button
             android:id="@+id/button2"

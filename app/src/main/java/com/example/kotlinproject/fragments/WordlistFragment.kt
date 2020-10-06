@@ -1,9 +1,13 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinproject.R
@@ -22,7 +26,7 @@ class WordlistFragment : Fragment() {
 
 
     /**
-     * Lazily initialize our [WordlistViewModel].
+     * Lazily initialize [WordlistViewModel].
      */
     private val viewModel: WordlistViewModel by lazy {
         ViewModelProvider(this).get(WordlistViewModel::class.java)
@@ -37,11 +41,13 @@ class WordlistFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentWordlistBinding.inflate(inflater)
 
+        (activity as AppCompatActivity).supportActionBar?.title = "Wordlist"
+
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-        // Giving the binding access to the OverviewViewModel
+        // Giving the binding access to the WordListViewModel
         binding.viewModel = viewModel
 
         // Sets the adapter of the jsonList RecyclerView
@@ -51,6 +57,26 @@ class WordlistFragment : Fragment() {
         return binding.root
     }
 
+    //Inflate the options menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.info_menu, menu)
+    }
+
+
+    //When statement for menu choices
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.info -> {          //Toast.makeText(context, "Hello testing", Toast.LENGTH_SHORT).show()
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setPositiveButton("Okay") { _, _ -> }
+                builder.setTitle("Info")
+                builder.setMessage("List of words used in the game")
+                builder.create().show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
 

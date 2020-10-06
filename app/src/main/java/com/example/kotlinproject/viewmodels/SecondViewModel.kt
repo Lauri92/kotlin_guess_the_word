@@ -1,11 +1,13 @@
-package com.example.kotlinproject.viewmodels
+/*
+Lauri Riikonen
+1909911
+ */package com.example.kotlinproject.viewmodels
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.kotlinproject.Word
+import com.example.kotlinproject.badlearnedwords.BadLearnedWordRepository
 import com.example.kotlinproject.data.FakeWordDao
 import com.example.kotlinproject.data.WordRepository
 import com.example.kotlinproject.network.JsonWordsApi
@@ -13,7 +15,9 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
-class SecondViewModel(private val wordRepository: WordRepository) : ViewModel() {
+class SecondViewModel(private val wordRepository: WordRepository,
+                      private val badLearnedWordRepository: BadLearnedWordRepository,
+                      application: Application) : AndroidViewModel(application) {
 
     private fun getWords() = wordRepository.getWords()
 
@@ -26,7 +30,7 @@ class SecondViewModel(private val wordRepository: WordRepository) : ViewModel() 
     val score: LiveData<Int>
         get() = _score
 
-    //The current displayedWord
+    //The current displayedWord, the word which user has to translate
     private var _displayedWord = MutableLiveData<String>()
     val displayedWord: LiveData<String>
         get() = _displayedWord
@@ -35,12 +39,6 @@ class SecondViewModel(private val wordRepository: WordRepository) : ViewModel() 
     private var _word = MutableLiveData<Word>()
     val word: LiveData<Word>
         get() = _word
-
-    //The current answer
-    private var _answer = MutableLiveData<String>()
-    val answer: LiveData<String>
-        get() = _answer
-
 
     //Check user input
     private var _buttonPressed = MutableLiveData<Boolean>()
@@ -59,7 +57,6 @@ class SecondViewModel(private val wordRepository: WordRepository) : ViewModel() 
 
     init {
         Log.i("SecondViewModel", "SecondViewModel Created!")
-        //getJsonWordProperties()
         _score.value = 0
         selectWord()
     }
@@ -81,48 +78,13 @@ class SecondViewModel(private val wordRepository: WordRepository) : ViewModel() 
     }
 
 
-/*
-    private fun nextWord() {
-        //Shuffle the word list, if the list is empty
-        if (pairList.isEmpty()) {
-            pairList()
-        } else {
-            //Select and remove a word from the list
-            _word.value = pairList.removeAt(0)
-        }
-    }
-
- */
-
     fun checkAnswer() {
         viewModelButtonpressedCheck()
     }
 
-
     override fun onCleared() {
         super.onCleared()
-        Log.i("GameViewModel", "GameViewModel destroyed!")
-    }
-
-    private fun createWord(lang: String, text: String, translateLang: String, translateText: String ) {
-        val lisattava = Word(lang, text)
-        lisattava.addTranslation(Word(translateLang, translateText))
-        wordRepository.addWord(lisattava)
-    }
-
-    private fun getJsonWordProperties() {
-        viewModelScope.launch {
-            try {
-                val properties = JsonWordsApi.retrofitService.getProperties()
-                Log.i("SecondViewModel", "List: $properties")
-                properties.forEach {
-                    Log.i("SecondViewModel", it.id + "\n")
-                    createWord(it.translateLang, it.translateText, it.lang, it.text)
-                }
-            } catch (e: Exception) {
-                Log.i("SecondViewModel","Error: $e")
-            }
-        }
+        Log.i("SecondViewModel", "SecondViewModel destroyed!")
     }
 
 }

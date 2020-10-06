@@ -1,3 +1,7 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.data
 
 class FakeDatabase private constructor(){

@@ -1,8 +1,13 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +28,9 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+        //change action bar title
+        (activity as AppCompatActivity).supportActionBar?.title = "Main menu"
 
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_first, container, false)
@@ -61,7 +69,7 @@ class FirstFragment : Fragment() {
     }
 
 
-    //When statement for winner menu choices
+    //When statement for menu choices
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.info -> {          //Toast.makeText(context, "Hello testing", Toast.LENGTH_SHORT).show()

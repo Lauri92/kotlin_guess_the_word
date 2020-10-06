@@ -1,3 +1,7 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.viewmodels
 
 import android.util.Log

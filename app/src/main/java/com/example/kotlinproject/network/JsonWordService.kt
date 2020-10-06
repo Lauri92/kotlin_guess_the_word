@@ -1,3 +1,7 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.network
 
 import com.example.kotlinproject.JsonWord

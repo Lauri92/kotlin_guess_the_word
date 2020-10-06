@@ -1,11 +1,14 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +37,10 @@ class ThirdFragment : Fragment() {
             inflater, R.layout.fragment_third, container, false
         )
 
+        //change the name of the title
+        (activity as AppCompatActivity).supportActionBar?.title = "Game 2"
+
+        //create factory parameter for viewmodel provider
         val factory = InjectorUtils.provideThirdViewModel()
 
         viewModel = ViewModelProvider(this, factory).get(ThirdViewModel::class.java)
@@ -52,6 +59,7 @@ class ThirdFragment : Fragment() {
             if (-1 != checkedId) {
                 var answerIndex = 0
 
+                //get the correct answer
                 val oikea = checkCorrectRadioButton()
 
                 when (checkedId) {
@@ -64,6 +72,7 @@ class ThirdFragment : Fragment() {
                 Log.i("ThirdFragment", "${viewModel.currentQuiz.value}")
 
 
+                //Choose a new word if the choice is correct
                 if (answerIndex == oikea) {
                     Log.i("ThirdFragment", "Correct answer")
                     viewModel.createNewQuiz()
@@ -73,6 +82,8 @@ class ThirdFragment : Fragment() {
             }
 
         }
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -84,7 +95,8 @@ class ThirdFragment : Fragment() {
         answers.shuffle()
     }
 
-    fun checkCorrectRadioButton(): Int {
+    //check the values of radiobuttons
+    private fun checkCorrectRadioButton(): Int {
         val oikea = viewModel.currentQuiz.value?.correctAnswer
 
         val firstButtonText: String = binding.firstAnswerRadioButton.text.toString()
@@ -108,5 +120,25 @@ class ThirdFragment : Fragment() {
         }
     }
 
+    //Inflate the options menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.info_menu, menu)
+    }
+
+
+    //When statement for menu choices
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.info -> {          //Toast.makeText(context, "Hello testing", Toast.LENGTH_SHORT).show()
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setPositiveButton("Okay") { _, _ -> }
+                builder.setTitle("Info")
+                builder.setMessage("Choose the correct translation")
+                builder.create().show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

@@ -22,7 +22,7 @@
             android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:padding="2dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:imageUrl="@{property.imgSrcUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

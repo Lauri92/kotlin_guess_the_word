@@ -1,3 +1,7 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.utilities
 
 import com.example.kotlinproject.data.FakeDatabase
@@ -13,10 +17,10 @@ object InjectorUtils {
         return FirstViewModelFactory(wordRepository)
     }
 
-    fun provideSecondViewModel(): SecondViewModelFactory {
-        val wordRepository = WordRepository.getInstance(FakeDatabase.getInstance().wordDao)
-        return SecondViewModelFactory(wordRepository)
-    }
+    //fun provideSecondViewModel(): SecondViewModelFactory {
+      //  val wordRepository = WordRepository.getInstance(FakeDatabase.getInstance().wordDao)
+        //return SecondViewModelFactory(wordRepository)
+    //}
 
     fun provideThirdViewModel(): ThirdViewModelFactory {
         val wordRepository = WordRepository.getInstance(FakeDatabase.getInstance().wordDao)

@@ -1,11 +1,14 @@
+/*
+Lauri Riikonen
+1909911
+ */
 package com.example.kotlinproject.data
 
 import com.example.kotlinproject.Word
 
 class WordRepository private constructor(private val wordDao: FakeWordDao) {
 
-    //This may seem redundant
-    //Imagine a code which also updates and checks the backend.
+
     fun addWord(word: Word) {
         wordDao.addWord(word)
     }
